@@ -9,6 +9,13 @@ A simple task management application built with React Native. This app allows yo
 - Remove tasks
 - Search tasks by text
 
+## Screenshot
+
+<p align="center">
+  <img src="./todo.png" alt="Screenshot" width="300" />
+  <img src="./todo1.png" alt="Screenshot" width="300" />
+</p>
+
 ## Installation
 
 1. **Clone the repository:**
