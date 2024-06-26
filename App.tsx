@@ -22,6 +22,7 @@ interface Task {
   text: string;
   completed: boolean;
 }
+
 const App = () => {
   const [task, setTask] = useState<string>('');
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -36,36 +37,45 @@ const App = () => {
       setTask('');
     }
   };
+
   const toggleTask = (index: number) => {
     const newTasks = [...tasks];
     newTasks[index].completed = !newTasks[index].completed;
     setTasks(newTasks);
   };
+
   const removeTask = (index: number) => {
-    const newTask = tasks.filter((_, i) => i !== index);
-    setTasks(newTask);
+    const newTasks = tasks.filter((_, i) => i !== index);
+    setTasks(newTasks);
   };
+
   const filterTasks = searchQuery
     ? tasks.filter(t => {
         return t.text.toLowerCase().includes(searchQuery.toLowerCase());
       })
     : tasks;
 
+  useEffect(() => {
+    console.log('filterTasks : ', filterTasks);
+  }, [filterTasks]);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.inputContainers}>
         <View style={styles.inputContainer}>
           <TextInput
-            placeholder=" Add new Task"
+            style={styles.input}
+            placeholder="Add new Task"
             value={task}
-            onChangeText={setTask}></TextInput>
+            onChangeText={setTask}
+          />
+          <Button title="Add Task" onPress={addTask} />
         </View>
-        <Button title="Add Task" onPress={addTask} />
       </View>
       <View style={styles.inputContainerSearch}>
         <TextInput
           style={styles.input}
-          placeholder=" Search Tasks"
+          placeholder="Search Tasks"
           value={searchQuery}
           onChangeText={setSearchQuery}
         />
@@ -100,26 +110,32 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   inputContainers: {
-    flexDirection: 'row',
-    width: '100%',
-    backgroundColor: 'blue',
-    alignItems: 'center',
-  },
-  inputContainerSearch: {
-    flexDirection: 'row',
-    width: '90%',
-    height: 40,
-    margin: 10,
-    borderWidth: 1,
-    backgroundColor: 'white',
+    marginBottom: 20,
   },
   inputContainer: {
     flexDirection: 'row',
-    width: '60%',
-    height: 40,
-    margin: 10,
+    alignItems: 'center',
+    justifyContent: 'space-between',
     borderWidth: 1,
-    backgroundColor: 'white',
+    padding: 10,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    backgroundColor: '#e0e0e0',
+  },
+  inputContainerSearch: {
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    height: 40,
+    padding: 10,
+    margin: 10,
+    backgroundColor: '#e0e0e0',
+  },
+  input: {
+    flex: 1,
+    height: 40,
+    paddingHorizontal: 10,
   },
   taskItem: {
     flexDirection: 'row',
@@ -140,4 +156,5 @@ const styles = StyleSheet.create({
     color: 'red',
   },
 });
+
 export default App;
